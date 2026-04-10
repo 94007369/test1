@@ -1,0 +1,35 @@
+name: 自动更新情报数据
+
+on:
+  schedule:
+    - cron: '0 */8 * * *'  # 每 8 小时运行一次 (UTC 时间)
+  workflow_dispatch:      # 允许你在 GitHub 页面上点按钮手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+
+      - name: 设置 Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 安装依赖
+        run: |
+          pip install -r requirements.txt
+
+      - name: 运行抓取脚本
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python monitor.py
+
+      - name: 提交并推送数据库更新
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add war_archive.db
+          git commit -m "自动更新数据库: $(date)" || echo "没有数据更新"
+          git push
