@@ -128,6 +128,7 @@ if not df.empty:
         <span style="margin-left:auto; color:#8b949e; font-size:11px;">🕒 {main['publish_time']}</span>
     </div>
     <div style="font-size:1.2em; font-weight:bold; color:#e6edf3;">{main['title_zh']}</div>
+    <div style="font-size:0.9em; color:#8b949e; font-style:italic; margin-top:5px; margin-bottom:10px;">{main['title']}</div>
     <div style="font-size:0.95em; color:#adbac7; line-height:1.6; margin-top:10px;">{main['summary_zh']}</div>
     <div style="margin-top:15px; text-align:right;"><a href="{main['url']}" target="_blank" style="color:#58a6ff; font-size:0.85em; text-decoration:none;">查看信源原文 →</a></div>
 </div>
